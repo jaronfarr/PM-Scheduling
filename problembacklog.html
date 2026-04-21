@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Web Page</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f9;
+        }
+
+        /* Navigation */
+        nav {
+            background: #2c3e50;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #3498db;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .cta-button {
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #2980b9;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">BRAND</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Welcome to Your New Page</h1>
+        <p>A clean, responsive template ready for your content.</p>
+        <a href="#" class="cta-button">Get Started</a>
+    </header>
+
+    <main class="container">
+        <section class="grid">
+            <div class="card">
+                <h3>Feature One</h3>
+                <p>Describe a core benefit or service here. Keep it brief and engaging for your users.</p>
+            </div>
+            <div class="card">
+                <h3>Feature Two</h3>
+                <p>Focus on what makes your project unique. Highlighting value is key to conversion.</p>
+            </div>
+            <div class="card">
+                <h3>Feature Three</h3>
+                <p>Add a final call to value. Mobile-responsive and fast-loading by default.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Your Name/Company. Built with Gemini.</p>
+    </footer>
+
+</body>
+</html>
