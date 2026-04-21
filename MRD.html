@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+  /* Style the sidebar */
+  .sidebar {
+    height: 100%;
+    width: 200px;
+    position: fixed; /* Stays in place when scrolling */
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #f1f1f1;
+    padding-top: 20px;
+    border-right: 1px solid #ddd;
+  }
+
+  /* Style the links inside the sidebar */
+  .sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    display: block;
+  }
+
+  /* Change color on hover */
+  .sidebar a:hover {
+    background-color: #ddd;
+  }
+
+  /* Add a margin to the rest of the page so text doesn't hide behind the sidebar */
+  .main-content {
+    margin-left: 220px; 
+    padding: 20px;
+  }
+</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MRD: PM Scheduler for Trimble Unity Maintain</title>
@@ -40,7 +74,15 @@
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
+<div class="sidebar">
+  <h3>Project Menu</h3>
+  <a href="index.html">Home</a>
+  <a href="MRD.html">MRD Report</a>
+  <a href="UserInsightsInfograph.html">User Insights</a>
+</div>
 
+<div class="main-content">
+  </div>
     <aside class="w-64 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10 flex-shrink-0">
         <div class="p-6 border-b border-slate-200">
             <h1 class="text-xl font-bold text-slate-800 tracking-tight">&#x1F4CA; Product Strategy</h1>
