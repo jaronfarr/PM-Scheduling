@@ -1,163 +1,160 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Web Page</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f4f4f9;
-        }
+``` html
+<style>
+  /* Base table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse; /* Removes double borders */
+    font-family: Arial, sans-serif; /* Use a common, readable font */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 20px 0;
+  }
 
-        /* Navigation */
-        nav {
-            background: #2c3e50;
-            color: #fff;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+  /* Header cell styling */
+  th {
+    background-color: #2c3e50; /* Dark blue/grey header background */
+    color: white; /* White text for contrast */
+    font-weight: bold;
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #1c2833;
+  }
 
-        nav .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+  /* Data cell styling */
+  td {
+    padding: 10px 15px;
+    text-align: left;
+    border: 1px solid #dddddd; /* Light grey borders */
+    vertical-align: top; /* Align content to the top */
+    line-height: 1.4;
+  }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0;
-        }
+  /* Alternating row colors (Zebra stripes) for readability */
+  tbody tr:nth-child(even) {
+    background-color: #f8f8f8; /* Very light grey for even rows */
+  }
 
-        nav ul li {
-            margin-left: 20px;
-        }
+  /* Hover effect for rows */
+  tbody tr:hover {
+    background-color: #e8f5e9; /* Light green-ish highlight on hover */
+    cursor: default;
+  }
 
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+  /* Specific column adjustments for better fit, using nth-child */
+  tbody td:nth-child(1), /* Persona column */
+  tbody td:nth-child(7) { /* Intelligent Solution column */
+    text-align: center;
+    width: 5%;
+  }
 
-        nav ul li a:hover {
-            color: #3498db;
-        }
+  tbody td:nth-child(3) { /* Category column */
+    width: 15%;
+  }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            padding: 0 20px;
-        }
+</style>
+<table>
+  <thead>
+    <tr>
+      <th>Persona</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Context</th>
+      <th>Evidence</th>
+      <th>Intelligent Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td></td>
+      <td>Child work order clutter</td>
+      <td>PM-centric tools</td>
+      <td>The system generates a new work order immediately upon the creation or completion of the previous one. This creates infinite loops of duplicate records that clutter mobile dispatch views with work due months or years in advance.</td>
+      <td>Schedule logic is embedded in the work order record rather than an independent trigger engine. The system cannot "plan" without physically creating a database record.</td>
+      <td>Transcript #2 (Elisa Peters): "It's been the bane of my existence for at least 10 years... it creates the next child and the next child." Mini-MRD: Lists "Pyramiding & Clutter" as a primary reason technicians lose trust in their digital inbox.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Lack of asset-centric PM command center</td>
+      <td>PM-centric tools</td>
+      <td>Managers cannot view all active schedules for a specific asset in one place. Scheduling entry is disparate, requiring users to navigate multiple screens to see the "planning story" for a piece of equipment.</td>
+      <td>Legacy architecture treats schedules as properties of a task, not the asset.</td>
+      <td>LA Sanitation manager asked, "How do I see the schedules from an asset view?" and our SEs had to deflect. Transcript #3 (Greg Maier): "I forgot what the cycle was... it would be great to see that at a glance."</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Lack of "lead-time" definition</td>
+      <td>PM-centric tools</td>
+      <td>Managers cannot configure a buffer (e.g., "Generate the 10,000-mile service at 9,500 miles"). Work is either "not there" or "overdue" immediately.</td>
+      <td>No "launch window" configuration exists to decouple the Generation Date from the Due Date.</td>
+      <td>(Elisa Peters): Requests a "configurable thing... number of days in advance that you want the work order to generate." JTBD session notes confirms the need for a "trigger buffer."</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Schedule nesting: Redudant work from overlapping work activities</td>
+      <td>PM-centric tools</td>
+      <td>The system cannot suppress a minor task (Monthly Inspection) when a major task (Annual Overhaul) is due at the same time. Both trigger, leading to redundant work and wasted labor.</td>
+      <td>No hierarchical logic exists to link separate work order templates into a single maintenance "program."</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Manual workarounds make it painful to migrate, upgrade, or update</td>
+      <td>PM-centric tools</td>
+      <td>Functional gaps have forced users to build external spreadsheets or system integrations to manage PMs, creating fragile environments that cannot be easily upgraded.</td>
+      <td>The core product's "vacuum" in scheduling forced users to innovate outside the platform.</td>
+      <td>City of Woodland, CA, which refuses to upgrade to Unity Maintain because they rely on their custom "CowPie" PM engine.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Untapped dark data and intelligence (i.e. technician logs)</td>
+      <td>Prescriptive maintenance</td>
+      <td>90% of critical failure indicators (e.g., "vibration," "minor leak," "running hot") are buried in unstructured technician notes that standard reporting cannot parse.</td>
+      <td>Technicians prioritize speed in the field and prefer notes over complex structured drop-downs. Databases cannot quantify "vibration" from a text field without AI/NLP.</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Static, manual PM intervals ignore real-world patterns</td>
+      <td>Prescriptive maintenance</td>
+      <td>Current PM intervals are "one-size-fits-all" (static), ignoring critical, real-world information that affects the life of the assetthat assets in harsh environments (e.g., high salinity or high load) fail faster.</td>
+      <td>Systems rely on static manufacturer manuals rather than real-world historical data patterns.</td>
+      <td>Deep Research Report: Identifies a "Compliance Gap" where 80% of facilities have documented plans but fewer than half achieve outcomes due to static timing. TSFM Report: Proves non-linear wear and tear is invisible to current age-based logic.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Can't forecast labor and budget</td>
+      <td></td>
+      <td>Supervisors cannot visualize future workload hours because work orders do not exist in the database until they are triggered. This makes it impossible to justify staffing needs for the upcoming year. supervisors resort to external Excel models to answer staffing questions.</td>
+      <td>Reporting tools can only sum "Active" or "Closed" work, not "Projected" work.</td>
+      <td>(Parker Summers): "Being able to see future projected work on a calendar without generating 500 records... would be a game changer</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Schedule breaks down when assets are removed, replaced, or added</td>
+      <td></td>
+      <td>When an asset is replaced or retired, the schedule does not auto-transfer to the new equipment. Planners must manually re-link schedules, or "ghost work" continues on retired assets.</td>
+      <td>Schedules are hard-coded to a specific Asset ID rather than an asset category</td>
+      <td>(Sylvia Atwan): "I actually have to go into the inspection and reattach the asset... otherwise, they're going to continue working on the wrong old asset."</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Disconnected IoT &amp; sensor data</td>
+      <td></td>
+      <td>Condition-based triggers (SCADA/IoT) are siloed from work order templates, preventing triggers like: "Trigger PM if vibration &gt; X OR if 6 months have passed."</td>
+      <td>Meter readings, SCADA tables, and WO templates live in separate, disconnected modules.</td>
+      <td>Sales has highlighted that SCADA data is currently "peppered in four or five different places," making cross-triggering impossible for the average user.</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
-        .cta-button {
-            background: #3498db;
-            color: white;
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: background 0.3s;
-        }
-
-        .cta-button:hover {
-            background: #2980b9;
-        }
-
-        /* Main Content */
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        /* Footer */
-        footer {
-            background: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 40px;
-        }
-    </style>
-</head>
-<body>
-
-    <nav>
-        <div class="logo">BRAND</div>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
-
-    <header class="hero">
-        <h1>Welcome to Your New Page</h1>
-        <p>A clean, responsive template ready for your content.</p>
-        <a href="#" class="cta-button">Get Started</a>
-    </header>
-
-    <main class="container">
-        <section class="grid">
-            <div class="card">
-                <h3>Feature One</h3>
-                <p>Describe a core benefit or service here. Keep it brief and engaging for your users.</p>
-            </div>
-            <div class="card">
-                <h3>Feature Two</h3>
-                <p>Focus on what makes your project unique. Highlighting value is key to conversion.</p>
-            </div>
-            <div class="card">
-                <h3>Feature Three</h3>
-                <p>Add a final call to value. Mobile-responsive and fast-loading by default.</p>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Your Name/Company. Built with Gemini.</p>
-    </footer>
-
-</body>
-</html>
+```
