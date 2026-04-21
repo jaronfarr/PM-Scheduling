@@ -37,6 +37,22 @@
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+   /* This targets all links in your document */
+a {
+    color: #0000EE !important; /* Classic HTML Blue */
+    text-decoration: underline !important; /* Ensures the line is visible */
+}
+
+/* Optional: change color when the link has been clicked */
+a:visited {
+    color: #551A8B; /* Classic Purple */
+}
+
+/* Optional: change color when hovering */
+a:hover {
+    color: #0000FF;
+    text-decoration: none; /* Removes underline only when hovering */
+}
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
