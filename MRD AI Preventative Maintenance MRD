@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRD: PM Scheduler for Trimble Unity Maintain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Slate (Backgrounds/Borders), Blue (Primary Brand/Trust), Red (Risk/Pain Points), Emerald (Solutions/AI). This palette ensures professional readability while highlighting critical market gaps and strategic solutions. -->
+    <!-- Application Structure Plan: The SPA uses a sidebar-driven tabbed interface, dividing the MRD into four logical sections: Executive Dashboard (high-level impact and revision history), User & Market Insights (qualitative/quantitative research synthesis), Product Requirements (MVP capabilities), and AI Strategy (future-looking TSFM concepts). This structure allows stakeholders to consume the narrative progressively—from problem identification to MVP solution, and finally to advanced differentiators—without overwhelming them with a single massive document. -->
+    <!-- Visualization & Content Choices: 
+    1. ARR Impact (Chart.js Doughnut) -> Goal: Inform -> Highlights the $1.2M financial risk of inaction. Justification: Doughnut charts effectively show composition of a total risk pool. 
+    2. Degradation Model (Chart.js Line) -> Goal: Compare -> Contrasts static age-based scheduling vs. TSFM AI risk-based scheduling. Justification: Line charts are optimal for showing changes and divergence over time. 
+    3. User Quote Cards (HTML/CSS) -> Goal: Inform/Empathize -> Surfaces direct customer pain points (e.g., 'sticker on windshield' workaround). 
+    4. Revision History Table (HTML) -> Goal: Organize -> Fulfills the strict MRD tracking requirement. 
+    Library Method: Chart.js for all data viz. NO SVG graphics used (using Unicode icons). NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container { height: 280px; }
+        }
+        .nav-item.active { background-color: #eff6ff; color: #1d4ed8; border-right: 4px solid #1d4ed8; font-weight: 600; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10 flex-shrink-0">
+        <div class="p-6 border-b border-slate-200">
+            <h1 class="text-xl font-bold text-slate-800 tracking-tight">&#x1F4CA; Product Strategy</h1>
+            <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">Trimble Unity Maintain</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1">
+                <li><button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item active w-full text-left px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">&#x1F3E0; Executive Dashboard</button></li>
+                <li><button onclick="switchTab('market')" id="nav-market" class="nav-item w-full text-left px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">&#x1F50D; Market &amp; User Insights</button></li>
+                <li><button onclick="switchTab('requirements')" id="nav-requirements" class="nav-item w-full text-left px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">&#x1F4CB; Product Requirements</button></li>
+                <li><button onclick="switchTab('ai')" id="nav-ai" class="nav-item w-full text-left px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">&#x1F9E0; AI &amp; TSFM Strategy</button></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-slate-200 text-xs text-slate-400">
+            &#x1F4C5; Date: April 21, 2026<br>
+            &#x1F4CD; Draper, Utah, USA
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto bg-slate-50 relative">
+        <div class="max-w-6xl mx-auto p-8">
+
+            <section id="dashboard" class="tab-content active">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Market Requirements Document (MRD)</h2>
+                    <h3 class="text-xl text-blue-700 font-medium">Initiative: Preventative Maintenance (PM) Scheduler</h3>
+                    <p class="mt-4 text-slate-600 leading-relaxed bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                        <strong>Overview:</strong> This section provides the foundational context for the PM Scheduler initiative within Trimble Unity Maintain (Cityworks). It outlines the document's evolution, the core problem statement, and the macro-level financial impact driving the urgency of this development. The primary goal is to shift users from reactive, static maintenance to a dynamic, asset-centric scheduling paradigm.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8 overflow-x-auto">
+                    <h4 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">&#x1F4DD; Document Revision History</h4>
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead class="bg-slate-50 text-slate-700 uppercase font-semibold">
+                            <tr>
+                                <th class="px-4 py-3 rounded-tl-lg">Date</th>
+                                <th class="px-4 py-3">Revision</th>
+                                <th class="px-4 py-3">Author</th>
+                                <th class="px-4 py-3 rounded-tr-lg">Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="px-4 py-3">April 21, 2026</td>
+                                <td class="px-4 py-3">v1.0</td>
+                                <td class="px-4 py-3 font-medium">Product Management</td>
+                                <td class="px-4 py-3">Initial MRD generation based on Q1 2026 User Interviews, AHA Initiative EAM-S-33, and AI Deep Research.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3">Feb 05, 2026</td>
+                                <td class="px-4 py-3">Draft 0.2</td>
+                                <td class="px-4 py-3">Dafnee Zambrano</td>
+                                <td class="px-4 py-3">Incorporated JTBD canvas findings and specific flow requirements for asset grouping and nesting.</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3">Nov 24, 2025</td>
+                                <td class="px-4 py-3">Draft 0.1</td>
+                                <td class="px-4 py-3">Jaron Farr</td>
+                                <td class="px-4 py-3">AHA Initiative EAM-S-33 created. Core problem statement defined.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
+                        <h4 class="text-lg font-bold text-slate-800 mb-2">The Problem Statement</h4>
+                        <p class="text-slate-600 mb-4 text-sm leading-relaxed">
+                            Currently, agencies are challenged with wasted effort and money due to reactive or "run to failure" maintenance. Trimble Unity Maintain lacks the industry-expected capability to plan and schedule preventative maintenance dynamically for assets. Users are forced into disparate interfaces, resulting in a reliance on external spreadsheets, Python scripts, or custom third-party integrations (e.g., "CowPie" app in Woodland, CA, or FME integrations by Timmons Group).
+                        </p>
+                        <div class="bg-red-50 text-red-800 p-4 rounded-lg border border-red-100 text-sm">
+                            <strong>Critical Risk:</strong> Absence of this engine has resulted in <span class="font-bold text-red-600">over $1.2M</span> in identified ARR loss or immediate churn risk. <br>
+                            <span class="text-xs text-red-500 italic mt-1 block">[Source: User Insight Synthesis: PM Scheduler Initiative - Sept 2024-Apr 2026]</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                        <h4 class="text-lg font-bold text-slate-800 mb-4 text-center">Identified ARR Risk Distribution</h4>
+                        <div class="chart-container">
+                            <canvas id="arrRiskChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="market" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Market &amp; User Insights</h2>
+                    <p class="mt-4 text-slate-600 leading-relaxed bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                        <strong>Overview:</strong> This section synthesizes over 8 deep-dive customer interviews, Innovate 2025 co-creation sessions, and competitive analyses. It outlines the specific struggles our personas face when trying to manage asset health and highlights the workarounds they employ. Understanding these pain points is critical to designing a solution that truly replaces legacy habits.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="col-span-1 md:col-span-3">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4 border-b pb-2">Target Personas &amp; Competitive Gap</h3>
+                    </div>
+                    
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-3xl mb-2 text-blue-600">&#x1F477;</div>
+                        <h4 class="font-bold text-slate-800 mb-1">Asset Managers &amp; Planners</h4>
+                        <p class="text-sm text-slate-600">Need to define long-term maintenance tasks proactively to sustain asset condition. Require visibility into future workloads.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-3xl mb-2 text-emerald-600">&#x1F3D7;&#xFE0F;</div>
+                        <h4 class="font-bold text-slate-800 mb-1">Target Markets</h4>
+                        <p class="text-sm text-slate-600">Municipal Water Utilities, State DOTs, Aviation Hubs, Healthcare Campuses. Focus: Large-scale, GIS-centric infrastructure.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-red-100 bg-red-50 shadow-sm">
+                        <div class="text-3xl mb-2 text-red-500">&#x26A0;&#xFE0F;</div>
+                        <h4 class="font-bold text-red-800 mb-1">The Competitive Gap</h4>
+                        <p class="text-sm text-red-700">Competitors (Maximo, Limble, UpKeep) offer robust, centralized PM schedulers. Our users perceive a major deficit in our core EAM offering.</p>
+                        <p class="text-xs text-red-600 mt-2 italic">[Sources: Notes from Maximo demo; Limble Webinar; AHA EAM-S-33]</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-800 mb-4 border-b pb-2 mt-10">Voice of the Customer: Key Pain Points</h3>
+                <div class="space-y-4">
+                    
+                    <div class="bg-white rounded-lg p-5 border-l-4 border-amber-500 shadow-sm flex items-start">
+                        <div class="text-amber-500 text-2xl mr-4 mt-1">&#x1F4AC;</div>
+                        <div>
+                            <p class="italic text-slate-700 font-medium mb-2">"Our fleet managers are literally putting physical stickers on the windshields to remember when the next maintenance is due... they don't trust the system to generate it properly based on odometer readings."</p>
+                            <p class="text-xs text-slate-500 font-bold uppercase tracking-wide">&mdash; Steven Ensing (Transcript #1)</p>
+                            <p class="text-xs text-slate-500 mt-1"><strong>Insight:</strong> Lack of reliable usage-based triggers drives users entirely out of the software.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-5 border-l-4 border-blue-500 shadow-sm flex items-start">
+                        <div class="text-blue-500 text-2xl mr-4 mt-1">&#x1F4AC;</div>
+                        <div>
+                            <p class="italic text-slate-700 font-medium mb-2">"The child work order thing really is the biggest one. If you guys can just solve that logic so we don't have duplicates or 'never-ending' work orders, my clients would be thrilled."</p>
+                            <p class="text-xs text-slate-500 font-bold uppercase tracking-wide">&mdash; Elisa Peters, WSP / Implementer (Transcript #2)</p>
+                            <p class="text-xs text-slate-500 mt-1"><strong>Insight:</strong> Current loop-based scheduling causes database clutter and operational confusion.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-5 border-l-4 border-emerald-500 shadow-sm flex items-start">
+                        <div class="text-emerald-500 text-2xl mr-4 mt-1">&#x1F4AC;</div>
+                        <div>
+                            <p class="italic text-slate-700 font-medium mb-2">"Just that 'Google Calendar' style visibility... Being able to see the future projected work on a calendar without having to actually generate the 500 records in the database. Just a way to show the crew visually."</p>
+                            <p class="text-xs text-slate-500 font-bold uppercase tracking-wide">&mdash; Dafnee Zambrano, Solutions Architect (Transcript #4)</p>
+                            <p class="text-xs text-slate-500 mt-1"><strong>Insight:</strong> Need for "Ghost Records" to enable resource forecasting without database bloat.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="requirements" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Product Requirements (MVP)</h2>
+                    <p class="mt-4 text-slate-600 leading-relaxed bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                        <strong>Overview:</strong> Based on the synthesized market gaps, this section outlines the core functionality required for the Minimum Viable Product (MVP) of the PM Scheduler. These capabilities focus on shifting from single-work-order recurrence to holistic, asset-based schedule management, fulfilling the "Jobs To Be Done" framework identified in internal workshops.
+                    </p>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        
+                        <div class="p-6 border-b md:border-b-0 md:border-r border-slate-200">
+                            <div class="flex items-center mb-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold mr-3">1</div>
+                                <h3 class="text-lg font-bold text-slate-800">Centralized Schedule Creation</h3>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-600 pl-11 list-disc">
+                                <li><strong>Asset-Centric:</strong> Create schedules directly tied to an asset or group of assets ("Smart Lists" via GIS criteria).</li>
+                                <li><strong>Templates:</strong> Select Work Activity Templates and customize ELM (Equipment, Labor, Material) specifics for that schedule.</li>
+                                <li><strong>Recurrence:</strong> Support complex patterns (e.g., specific days of the week, seasonal dates) without needing multiple schedules.</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold mr-3">2</div>
+                                <h3 class="text-lg font-bold text-slate-800">Advanced Trigger Logic</h3>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-600 pl-11 list-disc">
+                                <li><strong>Time &amp; Usage:</strong> Trigger based on time intervals, usage thresholds (odometer, hours), or <em>"whichever comes first"</em> logic.</li>
+                                <li><strong>Condition-Based:</strong> Trigger based on asset condition score thresholds or telemetry behaviors (vibration, SCADA).</li>
+                                <li><strong>Buffer Zones:</strong> Define a "Lead Time" or "Days Ahead" buffer to generate work orders just-in-time, reducing inbox clutter.</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-6 border-t md:border-r border-slate-200">
+                            <div class="flex items-center mb-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold mr-3">3</div>
+                                <h3 class="text-lg font-bold text-slate-800">Nesting &amp; Hierarchy</h3>
+                            </div>
+                            <p class="text-sm text-slate-600 pl-11 mb-3">
+                                Prevent duplicate work by building hierarchical rules. If a major overhaul is due, skip the minor inspections.
+                            </p>
+                            <div class="pl-11 mt-2">
+                                <div class="bg-slate-50 border border-slate-200 rounded p-3 text-xs font-mono">
+                                    &#x251C;&#x2500; Annual Overhaul (Highest Priority)<br>
+                                    &#x2502; &nbsp;&#x2514;&#x2500; Suppresses: Quarterly Inspection<br>
+                                    &#x2502; &nbsp;&#x2514;&#x2500; Suppresses: Monthly Lube
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-6 border-t border-slate-200">
+                            <div class="flex items-center mb-4">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold mr-3">4</div>
+                                <h3 class="text-lg font-bold text-slate-800">PM Command Center</h3>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-600 pl-11 list-disc">
+                                <li><strong>Dashboard:</strong> Manage all schedules from a single pane. View overdue PM work.</li>
+                                <li><strong>Ghost Records:</strong> Provide a calendar view forecasting labor and material costs (1, 2, 5-year projections) using unsaved simulation records.</li>
+                                <li><strong>Migration:</strong> Provide a smooth upgrade path for legacy schedules into the new engine.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ai" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-extrabold text-slate-900 mb-2">AI-Enhanced Analysis &amp; Future Vision</h2>
+                    <p class="mt-4 text-slate-600 leading-relaxed bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+                        <strong>Overview:</strong> While the MVP focuses on establishing a robust rules-based engine, Phase 2 will leverage AI to move customers from static compliance to risk-adjusted Prescriptive Maintenance. This section visualizes the impact of the proposed Time Series Foundation Model (TSFM) which analyzes historical "dark data" to dynamically adjust maintenance priority.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 border-b pb-2">The Dark Data Opportunity</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-1 flex flex-col justify-center">
+                            <h4 class="font-bold text-slate-800 mb-2 text-md">From Age to Risk Intelligence</h4>
+                            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                                Traditional scheduling relies on static OEM manuals (e.g., "replace every 5 years"). TSFM treats every field event—repairs, usage spikes, unstructured technician notes like <em>"excessive vibration noticed"</em>—as variables influencing the asset's trajectory toward failure.
+                            </p>
+                            <ul class="text-sm text-slate-600 space-y-2 mb-4 list-none">
+                                <li><span class="text-emerald-500 font-bold">&#x2713;</span> <strong>The Digital Auditor:</strong> Agentic AI scans notes to suggest shortening PM intervals before catastrophic failure.</li>
+                                <li><span class="text-emerald-500 font-bold">&#x2713;</span> <strong>Proximity Planning:</strong> Algorithms group geospatially close tasks to reduce mobilization costs.</li>
+                            </ul>
+                            <p class="text-xs text-slate-500 italic">[Sources: Deep Research: AI Enhancements; TSFMs for Maintenance Prioritization]</p>
+                        </div>
+                        <div class="lg:col-span-2 border-l border-slate-100 pl-0 lg:pl-6">
+                            <h4 class="font-bold text-slate-800 mb-4 text-center text-md">Deterioration Modeling: Static Age vs. TSFM AI Risk Score</h4>
+                            <div class="chart-container">
+                                <canvas id="tsfmChart"></canvas>
+                            </div>
+                            <p class="text-xs text-center text-slate-500 mt-3">The TSFM recognizes non-linear degradation. A minor repair drops the risk temporarily, but the underlying curve accelerates over time based on historical failure patterns.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl shadow-md p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-3 flex items-center">&#x1F680; The Strategic Shift</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                        By integrating TSFM into the PM Scheduler, the core value proposition of Trimble Unity Maintain evolves from simple <em>Asset Tracking</em> to <em>Optimized Capital Preservation</em>. We empower users to answer the crucial question: <strong>"Which deferred PM work order, if completed today, provides the largest reduction in system-wide risk?"</strong>
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // Tab switching logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('nav-' + tabId).classList.add('active');
+        }
+
+        // Initialize Charts when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Chart 1: ARR Risk Distribution (Doughnut)
+            const arrCtx = document.getElementById('arrRiskChart').getContext('2d');
+            new Chart(arrCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Identified Churn Risk', 'Lost New Logos (Missing Feature)', 'Resource Inefficiencies'],
+                    datasets: [{
+                        data: [450000, 550000, 200000],
+                        backgroundColor: [
+                            '#ef4444', // Red-500
+                            '#f97316', // Orange-500
+                            '#eab308'  // Yellow-500
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15, font: { family: "'Segoe UI', sans-serif", size: 12 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let value = context.parsed || 0;
+                                    return context.label + ': $' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Chart 2: TSFM Degradation Model (Line)
+            const tsfmCtx = document.getElementById('tsfmChart').getContext('2d');
+            new Chart(tsfmCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6', 'Year 7', 'Year 8', 'Year 9', 'Year 10'],
+                    datasets: [
+                        {
+                            label: 'Static Age-Based Approach (Linear)',
+                            data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                            borderColor: '#94a3b8', // slate-400
+                            borderDash: [5, 5],
+                            fill: false,
+                            tension: 0.1,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'TSFM AI Risk Score (Dynamic)',
+                            data: [5, 8, 12, 18, 25, 40, 30, 55, 85, 98], // Note the dip at Year 7 representing a minor repair
+                            borderColor: '#10b981', // emerald-500
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#fff',
+                            pointBorderColor: '#10b981',
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Likelihood of Failure (Risk %)', font: { size: 12 } },
+                            grid: { color: '#f1f5f9' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, font: { size: 12 } } },
+                        tooltip: {
+                            callbacks: {
+                                title: function(context) {
+                                    if(context[0].label === 'Year 7') return 'Year 7: Minor Repair Intervenes';
+                                    return context[0].label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
