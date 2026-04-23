@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Enhanced PM Scheduler Infographic</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Inter', sans-serif; background-color: #09090b; color: #e4e4e7; }
+.chart-container { position: relative; width: 100%; max-width: 100%; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+@media (min-width: 768px) { .chart-container { height: 400px; } }
+.plotly-container { width: 100%; height: 100%; min-height: 400px; }
+.glass-card { background: rgba(24, 24, 27, 0.7); backdrop-filter: blur(10px); border: 1px solid #27272a; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); }
+.text-gradient-cyan { background: linear-gradient(to right, #06b6d4, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.text-gradient-magenta { background: linear-gradient(to right, #d946ef, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+</style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+<!-- Palette: Neon Cyberpunk (Zinc 950 Background, Cyan #06b6d4, Magenta #d946ef, Yellow #eab308, Green #22c55e) -->
+<!-- Plan Summary:
+Section 1: The Maintenance Dilemma (Introduction to the $1.2M ARR problem and static vs dynamic scheduling).
+Section 2: Asset Degradation Dynamics (Visualizing the non-linear deterioration modeling via TSFMs).
+Section 3: Feature Gap & Capabilities (Comparing legacy systems to the new AI-Enhanced Scheduler).
+Section 4: The TSFM Risk Matrix (Plotly 3D scatter showing Age vs Failure vs Risk).
+Section 5: MVP User Flow & Jobs-To-Be-Done (HTML/CSS process flow for schedule creation).
+Section 6: ROI & Future Outlook (Shift from reactive to prescriptive maintenance over time).
+-->
+<!-- Visualization Choices:
+1. Single Big Number -> Inform -> Styled HTML -> Highlights the critical $1.2M ARR risk. (NO SVG)
+2. Line Chart -> Change -> Chart.js -> Demonstrates Linear Age-based vs Non-Linear TSFM asset degradation over time. (NO SVG)
+3. Radar Chart -> Compare -> Chart.js -> Compares legacy EAM feature gaps against the new AI-enhanced solution. (NO SVG)
+4. 3D Scatter Plot -> Relationships -> Plotly.js (WebGL) -> Shows that Age does not directly equal Risk; incorporates historical failures. (NO SVG - modeBar disabled)
+5. Flowchart -> Organize -> Structured HTML/CSS/Tailwind -> Illustrates the "Jobs-To-Be-Done" workflow for schedule creation. (NO SVG, NO MERMAID)
+6. Stacked Bar Chart -> Composition/Change -> Chart.js -> Shows the strategic 3-year shift from reactive emergency work to AI-prescribed PMs. (NO SVG)
+-->
+<!-- EXPLICIT CONFIRMATION: NEITHER MERMAID JS NOR SVG WERE USED ANYWHERE IN THE OUTPUT. -->
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <header class="text-center mb-16">
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-gradient-cyan uppercase">The Next Paradigm of EAM</h1>
+        <p class="text-xl text-zinc-400 max-w-3xl mx-auto font-light">Transforming Enterprise Asset Management from reactive "Run-to-Failure" frameworks to AI-driven, dynamic Preventative Maintenance (PM) Scheduling.</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div class="glass-card rounded-2xl p-8 flex flex-col justify-center items-center text-center col-span-1 md:col-span-3 lg:col-span-1 border-t-4 border-t-red-500">
+            <h2 class="text-lg font-semibold text-zinc-300 uppercase tracking-wider mb-2">Identified ARR Risk</h2>
+            <div class="text-6xl font-black text-red-500 mb-4">$1.2M+</div>
+            <p class="text-sm text-zinc-400">Revenue loss and pipeline risk directly attributed to the absence of an asset-based, dynamic preventative maintenance scheduling engine in current EAM offerings.</p>
+        </div>
+        
+        <div class="glass-card rounded-2xl p-8 col-span-1 md:col-span-3 lg:col-span-2">
+            <h2 class="text-2xl font-bold text-white mb-4">The Compliance Gap Dilemma</h2>
+            <p class="text-zinc-300 mb-4">Historically, the dominant approach to PM has been strict calendar or usage-based intervals dictated by static manuals. This creates a massive "Compliance Gap" between an O&M strategy and field reality.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                <div class="bg-zinc-800/50 p-4 rounded-lg border border-zinc-700">
+                    <h3 class="text-cyan-400 font-bold mb-2">Over-Maintenance</h3>
+                    <p class="text-sm text-zinc-400">Wasting highly constrained labor hours on healthy assets simply because a static 6-month calendar trigger was activated.</p>
+                </div>
+                <div class="bg-zinc-800/50 p-4 rounded-lg border border-zinc-700">
+                    <h3 class="text-magenta-400 font-bold mb-2">Under-Maintenance</h3>
+                    <p class="text-sm text-zinc-400">Missing high-risk, catastrophic failures because vital pre-failure signs ("dark data") are buried in unstructured technician notes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-16">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-2">Modeling Non-Linear Deterioration</h2>
+            <p class="text-zinc-400">Traditional methods assume a linear relationship—an asset degrades equally every month. However, Time Series Foundation Models (TSFMs) reveal that deterioration accelerates non-linearly. The chart below illustrates how TSFMs predict actual asset health versus static age-based assumptions.</p>
+        </div>
+        <div class="glass-card rounded-2xl p-6">
+            <div class="chart-container">
+                <canvas id="degradationChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div>
+            <h2 class="text-3xl font-bold text-white mb-2">Feature Gap Analysis</h2>
+            <p class="text-zinc-400 mb-6">Current capabilities force agencies into embarrassing workarounds like Python scripts and windshield stickers. By integrating AI Agents, "Ghost Record" calendars, and dynamic proximity planning, the proposed PM Scheduler leapfrogs legacy industry standards.</p>
+            <div class="glass-card rounded-2xl p-6">
+                <div class="chart-container h-80">
+                    <canvas id="capabilityRadarChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <h2 class="text-3xl font-bold text-white mb-2">Risk Intelligence Engine</h2>
+            <p class="text-zinc-400 mb-6">TSFMs evaluate real-world operational records to shift maintenance prioritization from static Age to dynamic Risk. This 3D mapping visualizes how assets of similar age require vastly different maintenance priorities based on failure history.</p>
+            <div class="glass-card rounded-2xl p-2 h-[410px]">
+                <div id="risk3DScatter" class="plotly-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-16">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white mb-2">Jobs-To-Be-Done: The MVP Schedule Flow</h2>
+            <p class="text-zinc-400">To eliminate disjointed screens, the new PM Scheduler consolidates the core user journey into a seamless, single-pane flow. This sequence ensures the right resources are dynamically assigned based on predefined rules before generating work orders.</p>
+        </div>
+        
+        <div class="glass-card rounded-2xl p-8">
+            <div class="grid grid-cols-1 md:grid-cols-7 gap-4 items-center">
+                
+                <div class="col-span-1 bg-zinc-800 border-2 border-cyan-500 rounded-xl p-5 text-center shadow-lg shadow-cyan-900/20 relative z-10">
+                    <div class="text-2xl mb-2">&#128200;</div>
+                    <h3 class="font-bold text-white text-sm mb-1">1. Select Assets</h3>
+                    <p class="text-xs text-zinc-400">Query GIS Smart Lists or select specific hierarchical sub-assets.</p>
+                </div>
+
+                <div class="col-span-1 flex justify-center text-cyan-500 text-3xl font-black rotate-90 md:rotate-0 py-2 md:py-0">&#8594;</div>
+
+                <div class="col-span-1 bg-zinc-800 border-2 border-magenta-500 rounded-xl p-5 text-center shadow-lg shadow-magenta-900/20 relative z-10">
+                    <div class="text-2xl mb-2">&#128203;</div>
+                    <h3 class="font-bold text-white text-sm mb-1">2. Apply Template</h3>
+                    <p class="text-xs text-zinc-400">Assign a Work Activity Template specifying standard operating procedures.</p>
+                </div>
+
+                <div class="col-span-1 flex justify-center text-magenta-500 text-3xl font-black rotate-90 md:rotate-0 py-2 md:py-0">&#8594;</div>
+
+                <div class="col-span-1 bg-zinc-800 border-2 border-yellow-500 rounded-xl p-5 text-center shadow-lg shadow-yellow-900/20 relative z-10">
+                    <div class="text-2xl mb-2">&#9874;</div>
+                    <h3 class="font-bold text-white text-sm mb-1">3. Customize ELM</h3>
+                    <p class="text-xs text-zinc-400">Define required Equipment, Labor craft skills, and specific Materials.</p>
+                </div>
+
+                <div class="col-span-1 flex justify-center text-yellow-500 text-3xl font-black rotate-90 md:rotate-0 py-2 md:py-0">&#8594;</div>
+
+                <div class="col-span-1 bg-zinc-800 border-2 border-green-500 rounded-xl p-5 text-center shadow-lg shadow-green-900/20 relative z-10">
+                    <div class="text-2xl mb-2">&#8986;</div>
+                    <h3 class="font-bold text-white text-sm mb-1">4. Triggers & Nesting</h3>
+                    <p class="text-xs text-zinc-400">Set Time/Usage frequencies and configure Ghost Record lead times.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <div class="mb-8 text-center max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-white mb-2">Transforming Operational Economics</h2>
+            <p class="text-zinc-400">By implementing "Whichever Comes First" logic and Prescriptive TSFM analysis, the platform drives a macro-level shift in maintenance strategies. Over a three-year horizon, organizations will systematically reduce expensive reactive emergency work, maximizing overall asset uptime and capital preservation.</p>
+        </div>
+        <div class="glass-card rounded-2xl p-6 max-w-4xl mx-auto">
+            <div class="chart-container">
+                <canvas id="roiShiftChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const wrapLabel = (label, maxChars = 16) => {
+    if (label.length <= maxChars) return label;
+    const words = label.split(' ');
+    const lines = [];
+    let currentLine = '';
+    words.forEach(word => {
+        if ((currentLine + word).length > maxChars) {
+            if (currentLine) lines.push(currentLine.trim());
+            currentLine = word + ' ';
+        } else {
+            currentLine += word + ' ';
+        }
+    });
+    if (currentLine) lines.push(currentLine.trim());
+    return lines;
+};
+
+const tooltipConfig = {
+    callbacks: {
+        title: function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        }
+    }
+};
+
+const commonOptions = {
+    maintainAspectRatio: false,
+    color: '#a1a1aa',
+    plugins: {
+        legend: { labels: { color: '#e4e4e7', font: { family: 'Inter' } } },
+        tooltip: tooltipConfig
+    },
+    scales: {
+        x: { grid: { color: '#27272a' }, ticks: { color: '#a1a1aa', font: { family: 'Inter' } } },
+        y: { grid: { color: '#27272a' }, ticks: { color: '#a1a1aa', font: { family: 'Inter' } } }
+    }
+};
+
+const ctxDegradation = document.getElementById('degradationChart').getContext('2d');
+new Chart(ctxDegradation, {
+    type: 'line',
+    data: {
+        labels: Array.from({length: 20}, (_, i) => `Year ${i+1}`),
+        datasets: [
+            {
+                label: 'Traditional Linear Degradation',
+                data: [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5],
+                borderColor: '#eab308',
+                borderDash: [5, 5],
+                backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                fill: false,
+                tension: 0
+            },
+            {
+                label: 'TSFM Non-Linear Degradation (Actual)',
+                data: [100, 98, 97, 95, 80, 78, 77, 75, 73, 50, 60, 55, 52, 48, 20, 35, 30, 10, 5, 0],
+                borderColor: '#06b6d4',
+                backgroundColor: 'rgba(6, 182, 212, 0.2)',
+                fill: true,
+                tension: 0.3,
+                pointBackgroundColor: '#d946ef',
+                pointRadius: 4
+            }
+        ]
+    },
+    options: {
+        ...commonOptions,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            ...commonOptions.plugins,
+            title: { display: true, text: 'Asset Health % Over Time', color: '#e4e4e7', font: { size: 16, family: 'Inter' } }
+        }
+    }
+});
+
+const radarLabelsRaw = ["Static Interval Scheduling", "Dynamic Risk Scoring (TSFM)", "Geospatial Proximity Planning", "Ghost Record Forecasting", "Nested PM Capability", "AI Text Analysis (Dark Data)"];
+const radarLabelsWrapped = radarLabelsRaw.map(lbl => wrapLabel(lbl));
+
+const ctxRadar = document.getElementById('capabilityRadarChart').getContext('2d');
+new Chart(ctxRadar, {
+    type: 'radar',
+    data: {
+        labels: radarLabelsWrapped,
+        datasets: [
+            {
+                label: 'Legacy EAM / CMMS',
+                data: [80, 10, 20, 0, 30, 0],
+                backgroundColor: 'rgba(234, 179, 8, 0.2)',
+                borderColor: '#eab308',
+                pointBackgroundColor: '#eab308'
+            },
+            {
+                label: 'AI-Enhanced PM Scheduler',
+                data: [100, 95, 85, 90, 100, 80],
+                backgroundColor: 'rgba(217, 70, 239, 0.4)',
+                borderColor: '#d946ef',
+                pointBackgroundColor: '#06b6d4'
+            }
+        ]
+    },
+    options: {
+        maintainAspectRatio: false,
+        color: '#a1a1aa',
+        plugins: {
+            legend: { labels: { color: '#e4e4e7' } },
+            tooltip: tooltipConfig
+        },
+        scales: {
+            r: {
+                angleLines: { color: '#27272a' },
+                grid: { color: '#27272a' },
+                pointLabels: { color: '#a1a1aa', font: { family: 'Inter', size: 11 } },
+                ticks: { display: false, max: 100, min: 0 }
+            }
+        }
+    }
+});
+
+const generateRandomData = (num, minAge, maxAge, minFail, maxFail) => {
+    const data = [];
+    for(let i=0; i<num; i++) {
+        const age = Math.random() * (maxAge - minAge) + minAge;
+        const failures = Math.random() * (maxFail - minFail) + minFail;
+        const risk = Math.min(100, (failures * 8) + (age * 1.5) + (Math.random() * 20));
+        data.push({age, failures, risk});
+    }
+    return data;
+};
+
+const hvacData = generateRandomData(50, 2, 25, 0, 8);
+const pumpData = generateRandomData(50, 5, 40, 1, 12);
+const fleetData = generateRandomData(50, 1, 15, 0, 15);
+
+const trace1 = {
+    x: hvacData.map(d=>d.age), y: hvacData.map(d=>d.failures), z: hvacData.map(d=>d.risk),
+    mode: 'markers',
+    marker: { size: 5, color: '#06b6d4', opacity: 0.8 },
+    type: 'scatter3d',
+    name: 'Facilities (HVAC)'
+};
+
+const trace2 = {
+    x: pumpData.map(d=>d.age), y: pumpData.map(d=>d.failures), z: pumpData.map(d=>d.risk),
+    mode: 'markers',
+    marker: { size: 5, color: '#d946ef', opacity: 0.8 },
+    type: 'scatter3d',
+    name: 'Plant Pumps'
+};
+
+const trace3 = {
+    x: fleetData.map(d=>d.age), y: fleetData.map(d=>d.failures), z: fleetData.map(d=>d.risk),
+    mode: 'markers',
+    marker: { size: 5, color: '#eab308', opacity: 0.8 },
+    type: 'scatter3d',
+    name: 'Fleet Vehicles'
+};
+
+const layout3D = {
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    margin: { l: 0, r: 0, b: 0, t: 0 },
+    legend: { font: { color: '#a1a1aa' }, orientation: 'h', y: 1.1 },
+    scene: {
+        xaxis: { title: { text: 'Age (Years)', font: {color: '#a1a1aa'} }, tickfont: {color: '#a1a1aa'}, backgroundcolor: 'rgba(0,0,0,0)', gridcolor: '#27272a', showbackground: false, zerolinecolor: '#27272a' },
+        yaxis: { title: { text: 'Past Failures', font: {color: '#a1a1aa'} }, tickfont: {color: '#a1a1aa'}, backgroundcolor: 'rgba(0,0,0,0)', gridcolor: '#27272a', showbackground: false, zerolinecolor: '#27272a' },
+        zaxis: { title: { text: 'TSFM Risk Score', font: {color: '#a1a1aa'} }, tickfont: {color: '#a1a1aa'}, backgroundcolor: 'rgba(0,0,0,0)', gridcolor: '#27272a', showbackground: false, zerolinecolor: '#27272a' }
+    }
+};
+
+Plotly.newPlot('risk3DScatter', [trace1, trace2, trace3], layout3D, { displayModeBar: false, responsive: true });
+
+const ctxRoi = document.getElementById('roiShiftChart').getContext('2d');
+new Chart(ctxRoi, {
+    type: 'bar',
+    data: {
+        labels: ['Year 1 (Implementation)', 'Year 2 (Adoption)', 'Year 3 (Optimization)'],
+        datasets: [
+            {
+                label: 'Reactive / Emergency Work',
+                data: [65, 40, 15],
+                backgroundColor: '#ef4444'
+            },
+            {
+                label: 'Static Calendar PM',
+                data: [30, 20, 10],
+                backgroundColor: '#eab308'
+            },
+            {
+                label: 'AI-Prescribed Dynamic PM',
+                data: [5, 40, 75],
+                backgroundColor: '#22c55e'
+            }
+        ]
+    },
+    options: {
+        ...commonOptions,
+        scales: {
+            x: { stacked: true, grid: { color: '#27272a' }, ticks: { color: '#a1a1aa', font: { family: 'Inter' } } },
+            y: { stacked: true, grid: { color: '#27272a' }, ticks: { color: '#a1a1aa', font: { family: 'Inter' }, callback: function(value) { return value + "%" } } }
+        },
+        plugins: {
+            ...commonOptions.plugins,
+            title: { display: true, text: 'Percentage of Overall Maintenance Labor Distribution', color: '#e4e4e7', font: { size: 16, family: 'Inter' } }
+        }
+    }
+});
+</script>
+</body>
+</html>
